@@ -12,11 +12,11 @@ export default function XipeBox() {
     <MobileLayout>
       <div className="pt-4 pb-2">
         <div className="rounded-3xl bg-gradient-to-b from-brand/15 to-ink-900 border border-brand/20 p-5 mb-5">
-          <div className="text-brand font-extrabold text-xl">XIPEBOX</div>
+          <div className="text-accent font-extrabold text-xl">XIPEBOX</div>
           <p className="text-sm text-neutral-400">Tu alcancía virtual — ahorra y alcanza tus metas</p>
           <div className="text-4xl text-center my-3">🐷</div>
           <p className="text-xs text-neutral-500">Total ahorrado</p>
-          <p className="text-2xl font-bold text-brand">{money(balance.xipeboxTotal)}</p>
+          <p className="text-2xl font-bold text-accent">{money(balance.xipeboxTotal)}</p>
         </div>
 
         <div className="grid grid-cols-2 gap-3 mb-6">
@@ -36,7 +36,7 @@ export default function XipeBox() {
                 <div className="flex justify-between items-center mb-1.5">
                   <span className="font-semibold truncate">{g.title}</span>
                   {g.status === 'vencida' && (
-                    <span className="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full">Vencida</span>
+                    <span className="text-[10px] bg-red-500/20 text-red-500 px-2 py-0.5 rounded-full">Vencida</span>
                   )}
                 </div>
                 <p className="text-xs text-neutral-500 mb-2">

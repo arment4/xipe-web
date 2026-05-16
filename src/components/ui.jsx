@@ -4,7 +4,7 @@ import { IcArrowLeft, IcCheck } from './Icons'
 export function SuccessScreen({ title, detail, onClose, closeLabel = 'Volver al inicio' }) {
   return (
     <div className="flex flex-col items-center justify-center h-full text-center pt-20">
-      <div className="w-20 h-20 rounded-full bg-brand grid place-items-center text-ink-950 mb-6 shadow-glow">
+      <div className="w-20 h-20 rounded-full bg-brand grid place-items-center text-brandink mb-6 shadow-glow">
         <IcCheck width={40} height={40} />
       </div>
       <h2 className="text-2xl font-bold mb-1">{title}</h2>
@@ -21,7 +21,7 @@ export function ScreenHeader({ title, subtitle, back = true, right = null }) {
     <div className="flex items-center gap-3 pt-2 pb-4">
       {back && (
         <button onClick={() => nav(-1)}
-          className="w-9 h-9 rounded-full bg-ink-850 border border-ink-800 grid place-items-center text-white shrink-0">
+          className="w-9 h-9 rounded-full bg-ink-850 border border-ink-800 grid place-items-center text-fg shrink-0">
           <IcArrowLeft width={18} height={18} />
         </button>
       )}
@@ -59,7 +59,7 @@ export function TextInput(props) {
 export function FileInput({ label }) {
   return (
     <label className="block w-full rounded-2xl border border-dashed border-ink-600 bg-ink-850 px-4 py-5 text-center text-sm text-neutral-400 cursor-pointer hover:border-brand/50 transition">
-      <span className="text-brand font-medium">📎 {label}</span>
+      <span className="text-accent font-medium">📎 {label}</span>
       <span className="block text-[11px] mt-1">JPG, PNG o PDF (prototipo — no se sube)</span>
       <input type="file" className="hidden" />
     </label>
@@ -74,7 +74,7 @@ export function ProgressBar({ value, max, showPct = true }) {
         <div className="h-full rounded-full bg-brand transition-all"
           style={{ width: `${pct}%` }} />
       </div>
-      {showPct && <span className="text-brand text-sm font-semibold w-10 text-right">{pct}%</span>}
+      {showPct && <span className="text-accent text-sm font-semibold w-10 text-right">{pct}%</span>}
     </div>
   )
 }
@@ -91,7 +91,7 @@ export function Button({ children, variant = 'primary', onClick, type = 'button'
 export function Toast({ show, text }) {
   if (!show) return null
   return (
-    <div className="fixed left-1/2 -translate-x-1/2 bottom-28 z-50 bg-brand text-ink-950 font-semibold text-sm px-5 py-3 rounded-2xl shadow-glow animate-pulse">
+    <div className="fixed left-1/2 -translate-x-1/2 bottom-28 z-50 bg-brand text-brandink font-semibold text-sm px-5 py-3 rounded-2xl shadow-glow animate-pulse">
       {text}
     </div>
   )

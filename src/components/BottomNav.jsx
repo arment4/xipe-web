@@ -38,7 +38,7 @@ export function BottomNav() {
                   onClick={() => { setOpen(false); nav(to) }}
                   className="quick-action !py-5">
                   <Icon />
-                  <span className="text-xs font-medium text-white">{label}</span>
+                  <span className="text-xs font-medium text-fg">{label}</span>
                 </button>
               ))}
             </div>
@@ -52,7 +52,7 @@ export function BottomNav() {
             if (it.to === 'FAB') {
               return (
                 <button key="fab" onClick={() => setOpen((o) => !o)}
-                  className="w-14 h-14 -mt-7 rounded-full bg-brand text-ink-950 grid place-items-center shadow-glow font-black text-2xl active:scale-95 transition">
+                  className="w-14 h-14 -mt-7 rounded-full bg-brand text-brandink grid place-items-center shadow-glow font-black text-2xl active:scale-95 transition">
                   ✕
                 </button>
               )
@@ -61,7 +61,7 @@ export function BottomNav() {
             const { Icon } = it
             return (
               <button key={it.to} onClick={() => nav(it.to)}
-                className={`flex flex-col items-center gap-1 flex-1 ${active ? 'text-brand' : 'text-neutral-500'}`}>
+                className={`flex flex-col items-center gap-1 flex-1 ${active ? 'text-accent' : 'text-neutral-500'}`}>
                 <Icon width={22} height={22} />
                 <span className="text-[10px] font-medium">{it.label}</span>
               </button>

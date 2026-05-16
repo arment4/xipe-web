@@ -43,7 +43,7 @@ export default function AdminClients() {
                 <td className="px-5 py-3"><StatusBadge status={c.status} /></td>
                 <td className="px-5 py-3 text-right">
                   <button onClick={() => nav(`/admin/clients/${c.id}`)}
-                    className="text-brand text-xs font-medium">Ver detalle →</button>
+                    className="text-accent text-xs font-medium">Ver detalle →</button>
                 </td>
               </tr>
             ))}

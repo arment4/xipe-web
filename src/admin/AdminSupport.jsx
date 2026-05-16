@@ -44,10 +44,10 @@ export default function AdminSupport() {
                 className="app-input mb-3" />
               <div className="flex gap-3">
                 <button onClick={() => { setSent(true); setSupportStatus(msg.id, 'cerrado') }}
-                  className="px-5 py-2.5 rounded-xl bg-brand text-ink-950 font-semibold text-sm">
+                  className="px-5 py-2.5 rounded-xl bg-brand text-brandink font-semibold text-sm">
                   Enviar y cerrar
                 </button>
-                {sent && <span className="text-brand text-sm self-center">✓ Respuesta enviada (prototipo)</span>}
+                {sent && <span className="text-accent text-sm self-center">✓ Respuesta enviada (prototipo)</span>}
               </div>
             </>
           ) : (

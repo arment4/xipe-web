@@ -48,7 +48,7 @@ export default function Home() {
           {hide ? '••••••' : money(balance.total, balance.currency)}
         </div>
         <div className="text-neutral-500 text-sm mt-0.5">{balance.currency}</div>
-        <div className="inline-flex items-center gap-1 mt-3 px-3 py-1 rounded-full bg-brand/15 text-brand text-xs font-medium">
+        <div className="inline-flex items-center gap-1 mt-3 px-3 py-1 rounded-full bg-brand/15 text-accent text-xs font-medium">
           ↗ +{balance.monthChangePct}% este mes
         </div>
         <div className="-mx-5 -mb-5 mt-2"><BalanceChart height={90} /></div>
@@ -58,7 +58,7 @@ export default function Home() {
         {actions.map(({ label, to, Icon }) => (
           <button key={label} onClick={() => nav(to)} className="quick-action">
             <Icon width={20} height={20} />
-            <span className="text-[11px] font-medium text-white leading-tight text-center">{label}</span>
+            <span className="text-[11px] font-medium text-fg leading-tight text-center">{label}</span>
           </button>
         ))}
       </div>
@@ -66,23 +66,23 @@ export default function Home() {
       <div className="grid grid-cols-2 gap-3 mb-5">
         <button onClick={() => nav('/xipebox')}
           className="text-left rounded-3xl bg-gradient-to-b from-brand/15 to-ink-900 border border-brand/20 p-4">
-          <div className="text-brand font-extrabold text-lg">XIPEBOX</div>
+          <div className="text-accent font-extrabold text-lg">XIPEBOX</div>
           <p className="text-xs text-neutral-400 mb-6">Tu alcancía virtual</p>
           <div className="text-5xl text-center mb-3">🐷</div>
           <p className="text-[11px] text-neutral-500">Total ahorrado</p>
           <div className="flex items-center justify-between">
-            <span className="text-brand font-bold">{money(balance.xipeboxTotal)}</span>
+            <span className="text-accent font-bold">{money(balance.xipeboxTotal)}</span>
             <IcArrowRight width={16} height={16} />
           </div>
         </button>
         <button onClick={() => nav('/hcbox')}
           className="text-left rounded-3xl bg-gradient-to-b from-cyan-500/10 to-ink-900 border border-cyan-500/20 p-4">
-          <div className="text-cyan-300 font-extrabold text-lg">HCBOX</div>
+          <div className="text-cyan-600 font-extrabold text-lg">HCBOX</div>
           <p className="text-xs text-neutral-400 mb-3">Planes de inversión estructurados</p>
           <div className="text-5xl text-center mb-3">📦</div>
           <p className="text-[11px] text-neutral-500">Total invertido</p>
           <div className="flex items-center justify-between">
-            <span className="text-white font-bold">{money(balance.hcboxTotal)}</span>
+            <span className="text-fg font-bold">{money(balance.hcboxTotal)}</span>
             <IcArrowRight width={16} height={16} />
           </div>
         </button>
@@ -91,7 +91,7 @@ export default function Home() {
       <div className="rounded-3xl bg-ink-900 border border-ink-800 p-5">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-bold">Tus metas</h3>
-          <button onClick={() => nav('/xipebox')} className="text-brand text-sm font-medium">
+          <button onClick={() => nav('/xipebox')} className="text-accent text-sm font-medium">
             Ver todas ›
           </button>
         </div>

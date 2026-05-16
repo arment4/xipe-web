@@ -57,7 +57,7 @@ export default function Send() {
       <ScreenHeader title="Enviar dinero" subtitle={`Disponible: ${money(balance.total)}`} />
 
       <button onClick={() => setScan(true)}
-        className="w-full rounded-2xl border border-brand/40 bg-brand/10 text-brand font-semibold py-4 mb-5 flex items-center justify-center gap-2">
+        className="w-full rounded-2xl border border-brand/40 bg-brand/10 text-accent font-semibold py-4 mb-5 flex items-center justify-center gap-2">
         <span className="text-lg">⛶</span> Escanear QR para pagar
       </button>
 
@@ -69,7 +69,7 @@ export default function Send() {
 
       {name && (
         <div className="rounded-2xl bg-brand/10 border border-brand/30 p-3 mb-4 text-sm">
-          Pagando a <span className="font-semibold text-brand">{name}</span>
+          Pagando a <span className="font-semibold text-accent">{name}</span>
         </div>
       )}
 
@@ -80,7 +80,7 @@ export default function Send() {
       <Field label="Monto">
         <TextInput type="number" inputMode="decimal" placeholder="0.00"
           value={amount} onChange={(e) => setAmount(e.target.value)} />
-        {n > balance.total && <p className="text-red-400 text-xs mt-1.5">Saldo insuficiente</p>}
+        {n > balance.total && <p className="text-red-500 text-xs mt-1.5">Saldo insuficiente</p>}
       </Field>
       <Field label="Concepto (opcional)">
         <TextInput value={concept} onChange={(e) => setConcept(e.target.value)} placeholder="Pago renta" />

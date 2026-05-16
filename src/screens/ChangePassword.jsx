@@ -24,7 +24,7 @@ export default function ChangePassword() {
       </Field>
       <Field label="Confirmar nueva contraseña">
         <TextInput type="password" value={f.conf} onChange={set('conf')} placeholder="••••••••" />
-        {f.conf && !match && <p className="text-red-400 text-xs mt-1.5">No coinciden</p>}
+        {f.conf && !match && <p className="text-red-500 text-xs mt-1.5">No coinciden</p>}
       </Field>
       <Button onClick={save} className={!ok ? 'opacity-40 pointer-events-none' : ''}>
         Actualizar contraseña

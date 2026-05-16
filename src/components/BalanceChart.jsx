@@ -6,17 +6,17 @@ export function BalanceChart({ height = 90 }) {
   const area = `0,${h} ${line} ${w},${h}`
   return (
     <svg viewBox={`0 0 ${w} ${h}`} className="w-full" preserveAspectRatio="none"
-      style={{ height }}>
+      style={{ height, color: 'rgb(var(--accent))' }}>
       <defs>
         <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#C6F24E" stopOpacity="0.45" />
-          <stop offset="100%" stopColor="#C6F24E" stopOpacity="0" />
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0.4" />
+          <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
         </linearGradient>
       </defs>
       <polygon points={area} fill="url(#g)" />
-      <polyline points={line} fill="none" stroke="#C6F24E" strokeWidth="2.5"
+      <polyline points={line} fill="none" stroke="currentColor" strokeWidth="2.5"
         strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx={w} cy={h - (pts[pts.length - 1] / max) * h} r="5" fill="#C6F24E" />
+      <circle cx={w} cy={h - (pts[pts.length - 1] / max) * h} r="5" fill="currentColor" />
     </svg>
   )
 }

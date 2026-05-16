@@ -47,7 +47,7 @@ function Stat({ label, value, highlight }) {
   return (
     <div className="bg-ink-850 rounded-2xl p-3">
       <p className="text-[11px] text-neutral-500">{label}</p>
-      <p className={`font-semibold ${highlight ? 'text-brand' : 'text-white'}`}>{value}</p>
+      <p className={`font-semibold ${highlight ? 'text-accent' : 'text-fg'}`}>{value}</p>
     </div>
   )
 }

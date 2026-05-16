@@ -38,7 +38,7 @@ export default function AddMoney() {
           <button key={k} onClick={() => setMethod(k)}
             className={`rounded-2xl border p-4 text-left transition ${
               method === k ? 'border-brand bg-brand/10' : 'border-ink-800 bg-ink-850'}`}>
-            <Icon width={22} height={22} className="text-brand" />
+            <Icon width={22} height={22} className="text-accent" />
             <div className="font-semibold mt-2">{k}</div>
             <div className="text-[11px] text-neutral-500">{d}</div>
           </button>
@@ -48,7 +48,7 @@ export default function AddMoney() {
       <Field label="Monto a depositar" hint={`Mín ${money(MIN)} · Máx ${money(MAX)}`}>
         <TextInput type="number" inputMode="decimal" placeholder="0.00"
           value={amount} onChange={(e) => setAmount(e.target.value)} />
-        {err && <p className="text-red-400 text-xs mt-1.5">{err}</p>}
+        {err && <p className="text-red-500 text-xs mt-1.5">{err}</p>}
       </Field>
 
       <div className="flex gap-2 mb-8">
@@ -70,7 +70,7 @@ export default function AddMoney() {
 function Success({ amount, method, onClose }) {
   return (
     <div className="flex flex-col items-center justify-center h-full text-center pt-20">
-      <div className="w-20 h-20 rounded-full bg-brand grid place-items-center text-ink-950 mb-6 shadow-glow">
+      <div className="w-20 h-20 rounded-full bg-brand grid place-items-center text-brandink mb-6 shadow-glow">
         <IcCheck width={40} height={40} />
       </div>
       <h2 className="text-2xl font-bold mb-1">¡Depósito exitoso!</h2>

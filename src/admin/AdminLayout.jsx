@@ -10,7 +10,7 @@ const nav = [
 export function AdminLayout({ title, children }) {
   const go = useNavigate()
   return (
-    <div className="min-h-screen flex bg-[#060606] text-white">
+    <div className="min-h-screen flex bg-page text-fg">
       <aside className="w-64 shrink-0 border-r border-ink-800 bg-ink-950 p-5 hidden md:flex flex-col">
         <div className="flex items-center gap-2.5 mb-8">
           <XipeMark size={36} />
@@ -24,13 +24,13 @@ export function AdminLayout({ title, children }) {
             <NavLink key={n.to} to={n.to} end={n.end}
               className={({ isActive }) =>
                 `block px-4 py-2.5 rounded-xl text-sm font-medium transition ${
-                  isActive ? 'bg-brand text-ink-950' : 'text-neutral-400 hover:bg-ink-850'}`}>
+                  isActive ? 'bg-brand text-brandink' : 'text-neutral-400 hover:bg-ink-850'}`}>
               {n.label}
             </NavLink>
           ))}
         </nav>
         <button onClick={() => go('/home')}
-          className="text-xs text-neutral-500 hover:text-brand text-left">← Ir a la app móvil</button>
+          className="text-xs text-neutral-500 hover:text-accent text-left">← Ir a la app móvil</button>
       </aside>
       <main className="flex-1 overflow-x-auto">
         <header className="border-b border-ink-800 px-8 py-5">
@@ -44,14 +44,14 @@ export function AdminLayout({ title, children }) {
 
 export function StatusBadge({ status }) {
   const map = {
-    activo: 'bg-brand/15 text-brand',
-    'al-corriente': 'bg-brand/15 text-brand',
-    verificación: 'bg-amber-500/15 text-amber-400',
-    pendiente: 'bg-amber-500/15 text-amber-400',
-    abierto: 'bg-amber-500/15 text-amber-400',
-    suspendido: 'bg-red-500/15 text-red-400',
-    rechazada: 'bg-red-500/15 text-red-400',
-    aprobada: 'bg-brand/15 text-brand',
+    activo: 'bg-brand/15 text-accent',
+    'al-corriente': 'bg-brand/15 text-accent',
+    verificación: 'bg-amber-500/15 text-amber-600',
+    pendiente: 'bg-amber-500/15 text-amber-600',
+    abierto: 'bg-amber-500/15 text-amber-600',
+    suspendido: 'bg-red-500/15 text-red-500',
+    rechazada: 'bg-red-500/15 text-red-500',
+    aprobada: 'bg-brand/15 text-accent',
     cerrado: 'bg-ink-700 text-neutral-400',
   }
   return (

@@ -23,7 +23,7 @@ export default function More() {
         {links.map(({ label, to, Icon }) => (
           <button key={to} onClick={() => nav(to)}
             className="w-full flex items-center gap-4 rounded-2xl bg-ink-900 border border-ink-800 p-4 text-left">
-            <span className="text-brand"><Icon width={20} height={20} /></span>
+            <span className="text-accent"><Icon width={20} height={20} /></span>
             <span className="flex-1 font-medium text-sm">{label}</span>
             <IcArrowRight width={16} height={16} className="text-neutral-600" />
           </button>

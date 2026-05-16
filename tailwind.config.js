@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const v = (name) => `rgb(var(${name}) / <alpha-value>)`
+
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
@@ -9,13 +11,29 @@ export default {
           dark: '#A8E000',
           dim: '#9bbf3a',
         },
+        // dark text that sits on the lime brand color — constant in every theme
+        brandink: '#0A0A0A',
+        // page background outside the phone frame
+        page: v('--page'),
+        // brand accent for TEXT — readable green that darkens in light mode
+        accent: v('--accent'),
+        // foreground / body text — flips per theme
+        fg: v('--fg'),
+        // surfaces (was the fixed dark "ink" scale) — flips per theme
         ink: {
-          950: '#0A0A0A',
-          900: '#101010',
-          850: '#161616',
-          800: '#1C1C1C',
-          700: '#262626',
-          600: '#333333',
+          950: v('--s0'),
+          900: v('--s1'),
+          850: v('--s2'),
+          800: v('--s3'),
+          700: v('--s4'),
+          600: v('--s4'),
+        },
+        // muted text — flips per theme
+        neutral: {
+          300: v('--m1'),
+          400: v('--m2'),
+          500: v('--m3'),
+          600: v('--m4'),
         },
       },
       fontFamily: {

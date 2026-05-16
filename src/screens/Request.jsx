@@ -54,7 +54,7 @@ export default function Request() {
         <div className={`mx-auto w-fit rounded-2xl bg-white p-4 mb-3 transition ${ok ? '' : 'opacity-30 blur-[1px]'}`}>
           <QRCodeSVG value={payUrl} size={170} level="M" fgColor="#0A0A0A" bgColor="#ffffff" />
         </div>
-        {ok && <p className="text-brand font-semibold">Solicitando {money(n)}</p>}
+        {ok && <p className="text-accent font-semibold">Solicitando {money(n)}</p>}
         <p className="text-[11px] text-neutral-500 mt-1">
           Al escanearlo se abre la app del otro usuario lista para pagarte.
         </p>

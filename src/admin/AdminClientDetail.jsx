@@ -16,7 +16,7 @@ export default function AdminClientDetail() {
 
   return (
     <AdminLayout title={`Cliente · ${client.name}`}>
-      <button onClick={() => nav('/admin')} className="text-brand text-sm mb-5">← Volver a clientes</button>
+      <button onClick={() => nav('/admin')} className="text-accent text-sm mb-5">← Volver a clientes</button>
 
       <div className="grid grid-cols-3 gap-4 mb-7">
         <div className="rounded-2xl bg-ink-900 border border-ink-800 p-5 col-span-2">
@@ -48,7 +48,7 @@ export default function AdminClientDetail() {
                 <td className="px-5 py-3">{t.concept}</td>
                 <td className="px-5 py-3 text-neutral-400">{t.method}</td>
                 <td className={`px-5 py-3 text-right font-semibold ${
-                  t.type === 'in' ? 'text-brand' : 'text-white'}`}>
+                  t.type === 'in' ? 'text-accent' : 'text-fg'}`}>
                   {t.type === 'in' ? '+' : '−'}{money(t.amount)}
                 </td>
               </tr>

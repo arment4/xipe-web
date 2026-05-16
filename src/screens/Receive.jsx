@@ -31,7 +31,7 @@ export default function Receive() {
         <p className="text-sm text-neutral-400">Tu usuario Xipe</p>
         <p className="text-lg font-bold mb-1">@{handle}</p>
         {Number(amount) > 0 && (
-          <p className="text-brand font-semibold mb-2">Solicitando {money(Number(amount))}</p>
+          <p className="text-accent font-semibold mb-2">Solicitando {money(Number(amount))}</p>
         )}
         <p className="text-[11px] text-neutral-500 mb-4">
           Al escanearlo se abre la app de la otra persona lista para enviarte dinero.

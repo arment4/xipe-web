@@ -30,11 +30,11 @@ export default function AdminWithdrawals() {
                   {w.status === 'pendiente' ? (
                     <div className="flex gap-2 justify-end">
                       <button onClick={() => setWithdrawalStatus(w.id, 'aprobada')}
-                        className="text-xs font-medium px-3 py-1.5 rounded-lg bg-brand text-ink-950">
+                        className="text-xs font-medium px-3 py-1.5 rounded-lg bg-brand text-brandink">
                         Aprobar
                       </button>
                       <button onClick={() => setWithdrawalStatus(w.id, 'rechazada')}
-                        className="text-xs font-medium px-3 py-1.5 rounded-lg border border-red-500/40 text-red-400">
+                        className="text-xs font-medium px-3 py-1.5 rounded-lg border border-red-500/40 text-red-500">
                         Rechazar
                       </button>
                     </div>

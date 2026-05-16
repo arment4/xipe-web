@@ -56,7 +56,7 @@ export default function Register() {
 
         <p className="text-center text-sm text-neutral-400 mt-5 mb-2">
           ¿Ya tienes cuenta?{' '}
-          <Link to="/login" className="text-brand font-semibold">Inicia sesión</Link>
+          <Link to="/login" className="text-accent font-semibold">Inicia sesión</Link>
         </p>
       </div>
     </PhoneFrame>

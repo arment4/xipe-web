@@ -26,14 +26,14 @@ export default function Login() {
             <TextInput type="password" placeholder="••••••••" defaultValue="123456" />
           </Field>
           <div className="text-right mb-6">
-            <span className="text-xs text-brand">¿Olvidaste tu contraseña?</span>
+            <span className="text-xs text-accent">¿Olvidaste tu contraseña?</span>
           </div>
           <Button type="submit">Entrar</Button>
         </form>
 
         <p className="text-center text-sm text-neutral-400 mt-6">
           ¿No tienes cuenta?{' '}
-          <Link to="/register" className="text-brand font-semibold">Regístrate</Link>
+          <Link to="/register" className="text-accent font-semibold">Regístrate</Link>
         </p>
       </div>
     </PhoneFrame>

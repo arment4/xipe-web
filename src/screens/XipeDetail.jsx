@@ -31,7 +31,7 @@ export default function XipeDetail() {
         <p className="text-neutral-400 text-sm mb-4">de {money(goal.target)}</p>
         <ProgressBar value={goal.saved} max={goal.target} />
         {goal.status === 'vencida' && (
-          <p className="text-red-400 text-xs mt-3">⚠️ Alcancía vencida — ponte al corriente</p>
+          <p className="text-red-500 text-xs mt-3">⚠️ Alcancía vencida — ponte al corriente</p>
         )}
       </div>
 

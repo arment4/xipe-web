@@ -18,7 +18,7 @@ export default function Profile() {
     <MobileLayout>
       <ScreenHeader title="Perfil" back={false} />
       <div className="flex flex-col items-center mb-7">
-        <div className="w-20 h-20 rounded-full bg-brand text-ink-950 grid place-items-center text-2xl font-bold mb-3">
+        <div className="w-20 h-20 rounded-full bg-brand text-brandink grid place-items-center text-2xl font-bold mb-3">
           {user.name.split(' ').map((s) => s[0]).slice(0, 2).join('')}
         </div>
         <p className="text-lg font-bold">{user.name}</p>
@@ -29,7 +29,7 @@ export default function Profile() {
         {items.map(({ label, to, Icon }) => (
           <button key={to} onClick={() => nav(to)}
             className="w-full flex items-center gap-4 rounded-2xl bg-ink-900 border border-ink-800 p-4 text-left">
-            <span className="text-brand"><Icon width={20} height={20} /></span>
+            <span className="text-accent"><Icon width={20} height={20} /></span>
             <span className="flex-1 font-medium text-sm">{label}</span>
             <IcArrowRight width={16} height={16} className="text-neutral-600" />
           </button>
@@ -37,11 +37,11 @@ export default function Profile() {
       </div>
 
       <button onClick={() => { logout(); nav('/login') }}
-        className="btn-ghost mt-6 text-red-400 border-red-500/30">
+        className="btn-ghost mt-6 text-red-500 border-red-500/30">
         Cerrar sesión
       </button>
       <p className="text-center text-xs text-neutral-600 mt-4">
-        Panel admin: <button onClick={() => nav('/admin')} className="text-brand">/admin</button>
+        Panel admin: <button onClick={() => nav('/admin')} className="text-accent">/admin</button>
       </p>
     </MobileLayout>
   )

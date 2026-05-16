@@ -33,7 +33,7 @@ export default function Withdraw() {
       <Field label="Monto a retirar">
         <TextInput type="number" inputMode="decimal" placeholder="0.00"
           value={amount} onChange={(e) => setAmount(e.target.value)} />
-        {n > balance.total && <p className="text-red-400 text-xs mt-1.5">Saldo insuficiente</p>}
+        {n > balance.total && <p className="text-red-500 text-xs mt-1.5">Saldo insuficiente</p>}
       </Field>
       <div className="bg-ink-850 border border-ink-800 rounded-2xl p-4 text-xs text-neutral-400 mb-6">
         Los retiros se procesan tras aprobación del equipo Xipe (visible en el panel admin).

@@ -1,7 +1,7 @@
 export function XipeMark({ size = 36 }) {
   return (
     <div
-      className="rounded-2xl bg-brand flex items-center justify-center font-black text-ink-950 shadow-glow"
+      className="rounded-2xl bg-brand flex items-center justify-center font-black text-brandink shadow-glow"
       style={{ width: size, height: size, fontSize: size * 0.5 }}
     >
       <svg width={size * 0.6} height={size * 0.6} viewBox="0 0 24 24" fill="none"

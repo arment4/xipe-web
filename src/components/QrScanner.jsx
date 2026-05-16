@@ -48,7 +48,7 @@ export function QrScanner({ onResult, onClose }) {
         <div id="qr-reader-region"
           className="w-[260px] h-[260px] rounded-3xl overflow-hidden border-2 border-brand bg-ink-900" />
         {err ? (
-          <p className="text-red-400 text-sm text-center mt-5">{err}</p>
+          <p className="text-red-500 text-sm text-center mt-5">{err}</p>
         ) : (
           <p className="text-neutral-400 text-sm text-center mt-5">
             Apunta la cámara al código QR del otro usuario
