@@ -19,6 +19,7 @@ import Transactions from './screens/Transactions'
 import Notifications from './screens/Notifications'
 import Profile from './screens/Profile'
 import ProfileEdit from './screens/ProfileEdit'
+import ProfileVerification from './screens/ProfileVerification'
 import ChangePassword from './screens/ChangePassword'
 import Pin from './screens/Pin'
 
@@ -55,6 +56,7 @@ export default function App() {
 
       <Route path="/profile" element={<Profile />} />
       <Route path="/profile/edit" element={<ProfileEdit />} />
+      <Route path="/profile/verification" element={<ProfileVerification />} />
       <Route path="/profile/password" element={<ChangePassword />} />
       <Route path="/profile/pin" element={<Pin />} />
 

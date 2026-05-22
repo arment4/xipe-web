@@ -27,3 +27,4 @@ export const IcCoin = (p) => (<svg {...S(p)}><circle cx="12" cy="12" r="9"/><pat
 export const IcPig = (p) => (<svg {...S(p)}><path d="M19 11c0-3-3-5-7-5s-7 2-7 5c0 1.5.7 2.8 1.8 3.7L6 19h3l.6-1.6c.8.2 1.6.3 2.4.3s1.6-.1 2.4-.3L15 19h3l-.8-4.3C18.3 13.8 19 12.5 19 11Z"/><path d="M2 11h3"/><circle cx="15" cy="10" r="1" fill="currentColor"/><path d="M9 7.5C9 6 10 5 12 5"/></svg>)
 export const IcChart = (p) => (<svg {...S(p)}><path d="M4 19V5"/><path d="M4 19h16"/><path d="m7 14 3-4 3 2 4-6"/></svg>)
 export const IcSupport = (p) => (<svg {...S(p)}><path d="M21 15a4 4 0 0 1-4 4H8l-5 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z"/></svg>)
+export const IcShield = (p) => (<svg {...S(p)}><path d="M12 3 5 6v6c0 5 3 7 7 9 4-2 7-4 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>)

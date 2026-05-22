@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { MobileLayout } from '../components/MobileLayout'
 import { ScreenHeader } from '../components/ui'
 import { useMock } from '../data/MockProvider'
-import { IcEdit, IcLock, IcKey, IcArrowRight } from '../components/Icons'
+import { IcEdit, IcLock, IcKey, IcShield, IcArrowRight } from '../components/Icons'
 
 export default function Profile() {
   const nav = useNavigate()
@@ -10,6 +10,7 @@ export default function Profile() {
 
   const items = [
     { label: 'Editar perfil', to: '/profile/edit', Icon: IcEdit },
+    { label: 'Verificación de identidad', to: '/profile/verification', Icon: IcShield },
     { label: 'Cambiar contraseña', to: '/profile/password', Icon: IcLock },
     { label: 'Generar / cambiar PIN', to: '/profile/pin', Icon: IcKey },
   ]

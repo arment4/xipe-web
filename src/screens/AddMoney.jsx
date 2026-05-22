@@ -51,7 +51,7 @@ export default function AddMoney() {
         {err && <p className="text-red-500 text-xs mt-1.5">{err}</p>}
       </Field>
 
-      <div className="flex gap-2 mb-8">
+      <div className="flex gap-2 mb-6">
         {[500, 1000, 5000, 10000].map((q) => (
           <button key={q} onClick={() => setAmount(String(q))}
             className="flex-1 rounded-xl bg-ink-800 border border-ink-700 py-2 text-xs font-medium">
@@ -59,6 +59,14 @@ export default function AddMoney() {
           </button>
         ))}
       </div>
+
+      {n >= 50000 && (
+        <div className="bg-amber-500/10 border border-amber-500/25 rounded-2xl p-4 text-xs text-neutral-300 mb-6">
+          🛡️ Para montos altos necesitamos verificar tu identidad.
+          <button onClick={() => nav('/profile/verification')}
+            className="text-accent font-semibold ml-1">Subir documentos →</button>
+        </div>
+      )}
 
       <Button onClick={submit} className={!ok ? 'opacity-40 pointer-events-none' : ''}>
         Continuar con {method}

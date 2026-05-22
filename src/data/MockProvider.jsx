@@ -69,6 +69,16 @@ export function MockProvider({ children }) {
         g.id === id ? { ...g, saved: g.saved + amount, status: 'al-corriente' } : g))
       addTx({ type: 'out', concept: `Aportación XipeBox`, amount, method: 'XipeBox' })
     },
+    breakGoal: (id) => {
+      setGoals((gs) => {
+        const g = gs.find((x) => x.id === id)
+        if (g) {
+          setBalance((b) => ({ ...b, total: b.total + g.saved }))
+          addTx({ type: 'in', concept: `Alcancía rota · ${g.title}`, amount: g.saved, method: 'XipeBox' })
+        }
+        return gs.filter((x) => x.id !== id)
+      })
+    },
     setWithdrawalStatus: (id, status) =>
       setWithdrawals((w) => w.map((x) => (x.id === id ? { ...x, status } : x))),
     setSupportStatus: (id, status) =>

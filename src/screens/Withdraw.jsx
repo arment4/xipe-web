@@ -35,8 +35,13 @@ export default function Withdraw() {
           value={amount} onChange={(e) => setAmount(e.target.value)} />
         {n > balance.total && <p className="text-red-500 text-xs mt-1.5">Saldo insuficiente</p>}
       </Field>
-      <div className="bg-ink-850 border border-ink-800 rounded-2xl p-4 text-xs text-neutral-400 mb-6">
+      <div className="bg-ink-850 border border-ink-800 rounded-2xl p-4 text-xs text-neutral-400 mb-3">
         Los retiros se procesan tras aprobación del equipo Xipe (visible en el panel admin).
+      </div>
+      <div className="bg-amber-500/10 border border-amber-500/25 rounded-2xl p-4 text-xs text-neutral-300 mb-6">
+        🛡️ Para retirar a tu banco necesitamos verificar tu identidad.
+        <button onClick={() => nav('/profile/verification')}
+          className="text-accent font-semibold ml-1">Subir documentos →</button>
       </div>
       <Button onClick={submit} className={!ok ? 'opacity-40 pointer-events-none' : ''}>
         Solicitar retiro

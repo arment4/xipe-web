@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { PhoneFrame } from '../components/PhoneFrame'
 import { XipeMark } from '../components/Logo'
-import { Field, TextInput, FileInput, Button } from '../components/ui'
+import { Field, TextInput, Button } from '../components/ui'
 import { useMock } from '../data/MockProvider'
 
 export default function Register() {
@@ -33,25 +33,21 @@ export default function Register() {
           <Field label="Celular">
             <TextInput value={f.phone} onChange={set('phone')} placeholder="+52 55 0000 0000" />
           </Field>
-          <Field label="Identificación oficial (INE o pasaporte)">
-            <FileInput label="Anexar identificación" />
-          </Field>
           <Field label="Dirección — calle y código postal">
             <TextInput value={f.address} onChange={set('address')} placeholder="Calle 123, CP 00000" />
-          </Field>
-          <Field label="Comprobante de domicilio">
-            <FileInput label="Anexar comprobante" />
           </Field>
           <Field label="Correo">
             <TextInput type="email" value={f.email} onChange={set('email')} placeholder="tucorreo@mail.com" />
           </Field>
-          <Field label="Depósito inicial (por default)" hint="Se asigna automáticamente al abrir la cuenta">
-            <TextInput value="$7,000.00 USD" disabled className="opacity-60" />
-          </Field>
           <Field label="Contraseña">
             <TextInput type="password" placeholder="••••••••" />
           </Field>
-          <Button type="submit" className="mt-2">Registrarme</Button>
+          <div className="rounded-2xl bg-ink-850 border border-ink-800 p-4 text-xs text-neutral-400 mb-5">
+            Tu cuenta se crea sin depósito inicial. Podrás agregar dinero cuando
+            quieras. La verificación de identidad se solicita solo al agregar montos
+            altos o al retirar a tu banco.
+          </div>
+          <Button type="submit" className="mt-1">Crear cuenta</Button>
         </form>
 
         <p className="text-center text-sm text-neutral-400 mt-5 mb-2">

@@ -63,28 +63,17 @@ export default function Home() {
         ))}
       </div>
 
-      <div className="grid grid-cols-2 gap-3 mb-5">
+      <div className="mb-5">
         <button onClick={() => nav('/xipebox')}
-          className="text-left rounded-3xl bg-gradient-to-b from-brand/15 to-ink-900 border border-brand/20 p-4">
-          <div className="text-accent font-extrabold text-lg">XIPEBOX</div>
-          <p className="text-xs text-neutral-400 mb-6">Tu alcancía virtual</p>
-          <div className="text-5xl text-center mb-3">🐷</div>
-          <p className="text-[11px] text-neutral-500">Total ahorrado</p>
-          <div className="flex items-center justify-between">
-            <span className="text-accent font-bold">{money(balance.xipeboxTotal)}</span>
-            <IcArrowRight width={16} height={16} />
+          className="w-full text-left rounded-3xl bg-gradient-to-b from-brand/15 to-ink-900 border border-brand/20 p-5 flex items-center gap-4">
+          <div className="text-6xl shrink-0">🐷</div>
+          <div className="flex-1 min-w-0">
+            <div className="text-accent font-extrabold text-lg">XIPEBOX</div>
+            <p className="text-xs text-neutral-400 mb-2">Tu alcancía virtual</p>
+            <p className="text-[11px] text-neutral-500">Total ahorrado</p>
+            <span className="text-accent font-bold text-lg">{money(balance.xipeboxTotal)}</span>
           </div>
-        </button>
-        <button onClick={() => nav('/hcbox')}
-          className="text-left rounded-3xl bg-gradient-to-b from-cyan-500/10 to-ink-900 border border-cyan-500/20 p-4">
-          <div className="text-cyan-600 font-extrabold text-lg">HCBOX</div>
-          <p className="text-xs text-neutral-400 mb-3">Planes de inversión estructurados</p>
-          <div className="text-5xl text-center mb-3">📦</div>
-          <p className="text-[11px] text-neutral-500">Total invertido</p>
-          <div className="flex items-center justify-between">
-            <span className="text-fg font-bold">{money(balance.hcboxTotal)}</span>
-            <IcArrowRight width={16} height={16} />
-          </div>
+          <IcArrowRight width={18} height={18} className="shrink-0" />
         </button>
       </div>
 

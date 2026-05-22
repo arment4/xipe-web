@@ -13,7 +13,7 @@ export default function Login() {
     <PhoneFrame>
       <div className="flex flex-col h-full pt-10">
         <div className="flex justify-center mb-2"><XipeWordmark size={56} /></div>
-        <p className="text-center text-neutral-400 text-sm mb-10">se pronuncia "chipe"</p>
+        <p className="text-center text-neutral-400 text-sm mb-10">hazlo a tu manera</p>
 
         <h1 className="text-2xl font-bold mb-1">Bienvenido</h1>
         <p className="text-neutral-400 text-sm mb-8">Ingresa a tu cuenta de cliente</p>

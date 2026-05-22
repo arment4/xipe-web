@@ -7,9 +7,10 @@ import { useMock, money } from '../data/MockProvider'
 export default function XipeDetail() {
   const { id } = useParams()
   const nav = useNavigate()
-  const { goals, contributeGoal } = useMock()
+  const { goals, contributeGoal, breakGoal } = useMock()
   const goal = goals.find((g) => g.id === id)
   const [extra, setExtra] = useState('')
+  const [confirmBreak, setConfirmBreak] = useState(false)
 
   if (!goal) return (
     <PhoneFrame>
@@ -58,9 +59,37 @@ export default function XipeDetail() {
       <Button onClick={() => { contributeGoal(goal.id, Number(extra) || goal.contribution); setExtra('') }}>
         Hacer aportación
       </Button>
+
+      <button onClick={() => setConfirmBreak(true)}
+        className="w-full rounded-2xl border border-red-500/40 text-red-500 font-semibold py-3.5 mt-3 transition active:scale-[0.98] hover:bg-red-500/10">
+        💥 Romper la alcancía
+      </button>
       <button onClick={() => nav('/xipebox')} className="btn-ghost mt-3">
         Volver a XipeBox
       </button>
+
+      {confirmBreak && (
+        <div className="absolute inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center px-6"
+          onClick={() => setConfirmBreak(false)}>
+          <div className="w-full rounded-3xl bg-ink-900 border border-ink-800 p-6 text-center"
+            onClick={(e) => e.stopPropagation()}>
+            <div className="text-5xl mb-3">💥</div>
+            <h3 className="text-lg font-bold mb-1">¿Romper la alcancía?</h3>
+            <p className="text-sm text-neutral-400 mb-5">
+              Se cancelará "{goal.title}" y los {money(goal.saved)} ahorrados
+              regresarán a tu balance. Esta acción no se puede deshacer.
+            </p>
+            <button
+              onClick={() => { breakGoal(goal.id); nav('/xipebox') }}
+              className="w-full rounded-2xl bg-red-500 text-white font-semibold py-3.5 mb-2">
+              Sí, romper y recuperar {money(goal.saved)}
+            </button>
+            <button onClick={() => setConfirmBreak(false)} className="btn-ghost">
+              Cancelar
+            </button>
+          </div>
+        </div>
+      )}
     </PhoneFrame>
   )
 }
