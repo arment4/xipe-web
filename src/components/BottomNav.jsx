@@ -6,7 +6,7 @@ const items = [
   { to: '/home', label: 'Inicio', Icon: IcHome },
   { to: '/transactions', label: 'Movimientos', Icon: IcSwap },
   { to: 'FAB' },
-  { to: '/xipebox', label: 'XipeBox', Icon: IcBox },
+  { to: '/hcbox', label: 'HCbox', Icon: IcBox },
   { to: '/profile', label: 'Perfil', Icon: IcUser },
 ]
 
