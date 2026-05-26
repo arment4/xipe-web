@@ -26,6 +26,7 @@ export const seedGoals = [
     contribution: 1500,
     termMonths: 4,
     initialPayment: 1000,
+    period: 'mensual',
     status: 'al-corriente',
   },
   {
@@ -37,6 +38,7 @@ export const seedGoals = [
     contribution: 5000,
     termMonths: 24,
     initialPayment: 2000,
+    period: 'mensual',
     status: 'al-corriente',
   },
   {
@@ -48,6 +50,7 @@ export const seedGoals = [
     contribution: 8000,
     termMonths: 60,
     initialPayment: 5000,
+    period: 'mensual',
     status: 'vencida',
   },
 ]
