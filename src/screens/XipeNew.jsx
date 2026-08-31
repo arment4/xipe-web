@@ -21,9 +21,16 @@ export default function XipeNew() {
   const adj = periodMeta(f.period).adjective
 
   const ok = f.title && Number(f.target) > 0 && Number(f.termMonths) > 0
-  const submit = () => {
-    const g = createGoal({ ...f, contribution })
-    nav(`/xipebox/${g.id}`)
+  const [err, setErr] = useState('')
+  const [loading, setLoading] = useState(false)
+  const submit = async () => {
+    setErr('')
+    try {
+      setLoading(true)
+      const g = await createGoal({ ...f, contribution })
+      nav(`/xipebox/${g.id}`)
+    } catch (e) { setErr(e.message) }
+    finally { setLoading(false) }
   }
 
   return (
@@ -85,8 +92,9 @@ export default function XipeNew() {
         )}
       </div>
 
-      <Button onClick={submit} className={!ok ? 'opacity-40 pointer-events-none' : ''}>
-        Crear alcancía
+      {err && <p className="text-red-500 text-xs mb-3">{err}</p>}
+      <Button onClick={submit} className={!ok || loading ? 'opacity-40 pointer-events-none' : ''}>
+        {loading ? 'Creando…' : 'Crear alcancía'}
       </Button>
     </PhoneFrame>
   )

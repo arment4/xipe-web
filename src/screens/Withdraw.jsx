@@ -10,10 +10,20 @@ export default function Withdraw() {
   const [account, setAccount] = useState('')
   const [amount, setAmount] = useState('')
   const [done, setDone] = useState(false)
+  const [err, setErr] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const n = Number(amount)
   const ok = account && n > 0 && n <= balance.total
-  const submit = () => { requestWithdrawal(n, account); setDone(true) }
+  const submit = async () => {
+    setErr('')
+    try {
+      setLoading(true)
+      await requestWithdrawal(n, account)
+      setDone(true)
+    } catch (e) { setErr(e.message) }
+    finally { setLoading(false) }
+  }
 
   if (done) return (
     <PhoneFrame>
@@ -43,8 +53,9 @@ export default function Withdraw() {
         <button onClick={() => nav('/profile/verification')}
           className="text-accent font-semibold ml-1">Subir documentos →</button>
       </div>
-      <Button onClick={submit} className={!ok ? 'opacity-40 pointer-events-none' : ''}>
-        Solicitar retiro
+      {err && <p className="text-red-500 text-xs mb-3">{err}</p>}
+      <Button onClick={submit} className={!ok || loading ? 'opacity-40 pointer-events-none' : ''}>
+        {loading ? 'Solicitando…' : 'Solicitar retiro'}
       </Button>
     </PhoneFrame>
   )

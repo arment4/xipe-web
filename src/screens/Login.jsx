@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { PhoneFrame } from '../components/PhoneFrame'
 import { XipeWordmark } from '../components/Logo'
@@ -7,7 +8,21 @@ import { useMock } from '../data/MockProvider'
 export default function Login() {
   const nav = useNavigate()
   const { login } = useMock()
-  const submit = (e) => { e.preventDefault(); login(); nav('/home') }
+  const [email, setEmail] = useState('gerardo@xipe.mx')
+  const [password, setPassword] = useState('demo1234')
+  const [err, setErr] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const submit = async (e) => {
+    e.preventDefault()
+    setErr('')
+    try {
+      setLoading(true)
+      const u = await login(email, password)
+      nav(u?.role === 'ADMIN' ? '/admin' : '/home')
+    } catch (e) { setErr(e.message) }
+    finally { setLoading(false) }
+  }
 
   return (
     <PhoneFrame>
@@ -20,15 +35,20 @@ export default function Login() {
 
         <form onSubmit={submit}>
           <Field label="Correo">
-            <TextInput type="email" placeholder="tucorreo@mail.com" defaultValue="gerardo@xipe.mx" />
+            <TextInput type="email" value={email} onChange={(e) => setEmail(e.target.value)}
+              placeholder="tucorreo@mail.com" />
           </Field>
           <Field label="Contraseña">
-            <TextInput type="password" placeholder="••••••••" defaultValue="123456" />
+            <TextInput type="password" value={password} onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••" />
           </Field>
           <div className="text-right mb-6">
             <span className="text-xs text-accent">¿Olvidaste tu contraseña?</span>
           </div>
-          <Button type="submit">Entrar</Button>
+          {err && <p className="text-red-500 text-xs mb-3">{err}</p>}
+          <Button type="submit" className={loading ? 'opacity-60' : ''}>
+            {loading ? 'Entrando…' : 'Entrar'}
+          </Button>
         </form>
 
         <p className="text-center text-sm text-neutral-400 mt-6">

@@ -9,12 +9,18 @@ export default function ProfileEdit() {
   const { user, updateProfile } = useMock()
   const [f, setF] = useState({ name: user.name, phone: user.phone, email: user.email, address: user.address })
   const [saved, setSaved] = useState(false)
+  const [err, setErr] = useState('')
+  const [loading, setLoading] = useState(false)
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value })
 
-  const save = () => {
-    updateProfile({ ...f, firstName: f.name.split(' ')[0] })
-    setSaved(true)
-    setTimeout(() => nav('/profile'), 900)
+  const save = async () => {
+    setErr('')
+    try {
+      setLoading(true)
+      await updateProfile({ name: f.name, phone: f.phone, email: f.email, address: f.address })
+      setSaved(true)
+      setTimeout(() => nav('/profile'), 900)
+    } catch (e) { setErr(e.message); setLoading(false) }
   }
 
   return (
@@ -32,7 +38,10 @@ export default function ProfileEdit() {
       <Field label="Dirección">
         <TextInput value={f.address} onChange={set('address')} />
       </Field>
-      <Button onClick={save}>Guardar cambios</Button>
+      {err && <p className="text-red-500 text-xs mb-3">{err}</p>}
+      <Button onClick={save} className={loading ? 'opacity-40 pointer-events-none' : ''}>
+        {loading ? 'Guardando…' : 'Guardar cambios'}
+      </Button>
       <Toast show={saved} text="Perfil actualizado" />
     </PhoneFrame>
   )

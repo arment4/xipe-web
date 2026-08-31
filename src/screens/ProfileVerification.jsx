@@ -2,12 +2,22 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PhoneFrame } from '../components/PhoneFrame'
 import { ScreenHeader, Field, FileInput, Button, Toast } from '../components/ui'
+import { useMock } from '../data/MockProvider'
 
 export default function ProfileVerification() {
   const nav = useNavigate()
+  const { verifyIdentity } = useMock()
   const [saved, setSaved] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const send = () => { setSaved(true); setTimeout(() => nav('/profile'), 1000) }
+  const send = async () => {
+    try {
+      setLoading(true)
+      await verifyIdentity()
+      setSaved(true)
+      setTimeout(() => nav('/profile'), 1000)
+    } catch { setLoading(false) }
+  }
 
   return (
     <PhoneFrame>
@@ -33,7 +43,9 @@ export default function ProfileVerification() {
         <FileInput label="Anexar comprobante" />
       </Field>
 
-      <Button onClick={send}>Enviar documentos</Button>
+      <Button onClick={send} className={loading ? 'opacity-40 pointer-events-none' : ''}>
+        {loading ? 'Enviando…' : 'Enviar documentos'}
+      </Button>
       <button onClick={() => nav('/profile')} className="btn-ghost mt-3">
         Ahora no
       </button>

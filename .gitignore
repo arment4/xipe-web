@@ -3,3 +3,11 @@ dist
 .DS_Store
 *.log
 .vercel
+
+# Frontend env
+.env
+.env.local
+
+# Server
+server/node_modules
+server/.env

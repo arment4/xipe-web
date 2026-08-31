@@ -13,12 +13,22 @@ export default function AddMoney() {
   const [method, setMethod] = useState('Stripe')
   const [amount, setAmount] = useState('')
   const [done, setDone] = useState(false)
+  const [submitErr, setSubmitErr] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const n = Number(amount)
   const err = amount && (n < MIN ? `Mínimo ${money(MIN)}` : n > MAX ? `Máximo ${money(MAX)}` : '')
   const ok = n >= MIN && n <= MAX
 
-  const submit = () => { addMoney(n, method); setDone(true) }
+  const submit = async () => {
+    setSubmitErr('')
+    try {
+      setLoading(true)
+      await addMoney(n, method)
+      setDone(true)
+    } catch (e) { setSubmitErr(e.message) }
+    finally { setLoading(false) }
+  }
 
   if (done) return (
     <PhoneFrame>
@@ -68,8 +78,9 @@ export default function AddMoney() {
         </div>
       )}
 
-      <Button onClick={submit} className={!ok ? 'opacity-40 pointer-events-none' : ''}>
-        Continuar con {method}
+      {submitErr && <p className="text-red-500 text-xs mb-3">{submitErr}</p>}
+      <Button onClick={submit} className={!ok || loading ? 'opacity-40 pointer-events-none' : ''}>
+        {loading ? 'Procesando…' : `Continuar con ${method}`}
       </Button>
     </PhoneFrame>
   )

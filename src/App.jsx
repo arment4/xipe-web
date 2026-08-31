@@ -1,5 +1,6 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { ThemeSwitcher } from './theme/ThemeSwitcher'
+import { useMock } from './data/MockProvider'
 
 import Login from './screens/Login'
 import Register from './screens/Register'
@@ -28,45 +29,59 @@ import AdminClientDetail from './admin/AdminClientDetail'
 import AdminWithdrawals from './admin/AdminWithdrawals'
 import AdminSupport from './admin/AdminSupport'
 
+function RequireAuth({ children }) {
+  const { ready, authed } = useMock()
+  const loc = useLocation()
+  if (!ready) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-page text-neutral-500 text-sm">
+        Cargando…
+      </div>
+    )
+  }
+  if (!authed) return <Navigate to="/login" replace state={{ from: loc }} />
+  return children
+}
+
 export default function App() {
   return (
     <>
-    <ThemeSwitcher />
-    <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <ThemeSwitcher />
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-      <Route path="/home" element={<Home />} />
-      <Route path="/add-money" element={<AddMoney />} />
-      <Route path="/send" element={<Send />} />
-      <Route path="/receive" element={<Receive />} />
-      <Route path="/request" element={<Request />} />
-      <Route path="/withdraw" element={<Withdraw />} />
+        {[
+          ['/home', <Home />],
+          ['/add-money', <AddMoney />],
+          ['/send', <Send />],
+          ['/receive', <Receive />],
+          ['/request', <Request />],
+          ['/withdraw', <Withdraw />],
+          ['/xipebox', <XipeBox />],
+          ['/xipebox/simulate', <XipeSimulate />],
+          ['/xipebox/new', <XipeNew />],
+          ['/xipebox/:id', <XipeDetail />],
+          ['/hcbox', <HCBox />],
+          ['/more', <More />],
+          ['/transactions', <Transactions />],
+          ['/notifications', <Notifications />],
+          ['/profile', <Profile />],
+          ['/profile/edit', <ProfileEdit />],
+          ['/profile/verification', <ProfileVerification />],
+          ['/profile/password', <ChangePassword />],
+          ['/profile/pin', <Pin />],
+          ['/admin', <AdminClients />],
+          ['/admin/clients/:id', <AdminClientDetail />],
+          ['/admin/withdrawals', <AdminWithdrawals />],
+          ['/admin/support', <AdminSupport />],
+        ].map(([p, el]) => (
+          <Route key={p} path={p} element={<RequireAuth>{el}</RequireAuth>} />
+        ))}
 
-      <Route path="/xipebox" element={<XipeBox />} />
-      <Route path="/xipebox/simulate" element={<XipeSimulate />} />
-      <Route path="/xipebox/new" element={<XipeNew />} />
-      <Route path="/xipebox/:id" element={<XipeDetail />} />
-      <Route path="/hcbox" element={<HCBox />} />
-      <Route path="/more" element={<More />} />
-
-      <Route path="/transactions" element={<Transactions />} />
-      <Route path="/notifications" element={<Notifications />} />
-
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/profile/edit" element={<ProfileEdit />} />
-      <Route path="/profile/verification" element={<ProfileVerification />} />
-      <Route path="/profile/password" element={<ChangePassword />} />
-      <Route path="/profile/pin" element={<Pin />} />
-
-      <Route path="/admin" element={<AdminClients />} />
-      <Route path="/admin/clients/:id" element={<AdminClientDetail />} />
-      <Route path="/admin/withdrawals" element={<AdminWithdrawals />} />
-      <Route path="/admin/support" element={<AdminSupport />} />
-
-      <Route path="*" element={<Navigate to="/login" replace />} />
-    </Routes>
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
     </>
   )
 }

@@ -30,10 +30,20 @@ export default function Send() {
   const [concept, setConcept] = useState(sp.get('concept') || '')
   const [scan, setScan] = useState(false)
   const [done, setDone] = useState(false)
+  const [err, setErr] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const n = Number(amount)
   const ok = to && n > 0 && n <= balance.total
-  const submit = () => { sendMoney(name || to, n, concept); setDone(true) }
+  const submit = async () => {
+    setErr('')
+    try {
+      setLoading(true)
+      await sendMoney(name || to, n, concept)
+      setDone(true)
+    } catch (e) { setErr(e.message) }
+    finally { setLoading(false) }
+  }
 
   const onScan = (text) => {
     const r = parseScan(text)
@@ -85,8 +95,9 @@ export default function Send() {
       <Field label="Concepto (opcional)">
         <TextInput value={concept} onChange={(e) => setConcept(e.target.value)} placeholder="Pago renta" />
       </Field>
-      <Button onClick={submit} className={!ok ? 'opacity-40 pointer-events-none' : ''}>
-        Enviar {n > 0 ? money(n) : ''}
+      {err && <p className="text-red-500 text-xs mb-3">{err}</p>}
+      <Button onClick={submit} className={!ok || loading ? 'opacity-40 pointer-events-none' : ''}>
+        {loading ? 'Enviando…' : `Enviar ${n > 0 ? money(n) : ''}`}
       </Button>
       <button onClick={() => nav('/receive')} className="btn-ghost mt-3">Recibir dinero</button>
     </PhoneFrame>

@@ -8,13 +8,26 @@ import { useMock } from '../data/MockProvider'
 export default function Register() {
   const nav = useNavigate()
   const { register } = useMock()
-  const [f, setF] = useState({ name: '', phone: '', address: '', email: '' })
+  const [f, setF] = useState({ name: '', phone: '', address: '', email: '', password: '', confirm: '' })
+  const [err, setErr] = useState('')
+  const [loading, setLoading] = useState(false)
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value })
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault()
-    register({ name: f.name || 'Nuevo Cliente', phone: f.phone, address: f.address, email: f.email })
-    nav('/home')
+    setErr('')
+    if (f.password.length < 6) { setErr('La contraseña debe tener al menos 6 caracteres'); return }
+    if (f.password !== f.confirm) { setErr('Las contraseñas no coinciden'); return }
+    try {
+      setLoading(true)
+      await register({
+        name: f.name || 'Nuevo Cliente',
+        phone: f.phone, address: f.address,
+        email: f.email, password: f.password,
+      })
+      nav('/home')
+    } catch (e) { setErr(e.message) }
+    finally { setLoading(false) }
   }
 
   return (
@@ -40,14 +53,23 @@ export default function Register() {
             <TextInput type="email" value={f.email} onChange={set('email')} placeholder="tucorreo@mail.com" />
           </Field>
           <Field label="Contraseña">
-            <TextInput type="password" placeholder="••••••••" />
+            <TextInput type="password" value={f.password} onChange={set('password')} placeholder="••••••••" />
+          </Field>
+          <Field label="Confirmar contraseña">
+            <TextInput type="password" value={f.confirm} onChange={set('confirm')} placeholder="••••••••" />
+            {f.confirm && f.password !== f.confirm && (
+              <p className="text-red-500 text-xs mt-1.5">Las contraseñas no coinciden</p>
+            )}
           </Field>
           <div className="rounded-2xl bg-ink-850 border border-ink-800 p-4 text-xs text-neutral-400 mb-5">
             Tu cuenta se crea sin depósito inicial. Podrás agregar dinero cuando
             quieras. La verificación de identidad se solicita solo al agregar montos
             altos o al retirar a tu banco.
           </div>
-          <Button type="submit" className="mt-1">Crear cuenta</Button>
+          {err && <p className="text-red-500 text-xs mb-3">{err}</p>}
+          <Button type="submit" className={`mt-1 ${loading ? 'opacity-60' : ''}`}>
+            {loading ? 'Creando…' : 'Crear cuenta'}
+          </Button>
         </form>
 
         <p className="text-center text-sm text-neutral-400 mt-5 mb-2">

@@ -11,6 +11,19 @@ export default function XipeDetail() {
   const goal = goals.find((g) => g.id === id)
   const [extra, setExtra] = useState('')
   const [confirmBreak, setConfirmBreak] = useState(false)
+  const [busy, setBusy] = useState(false)
+
+  const doContribute = async () => {
+    setBusy(true)
+    try { await contributeGoal(goal.id, Number(extra) || goal.contribution); setExtra('') }
+    catch (e) { alert(e.message) }
+    finally { setBusy(false) }
+  }
+  const doBreak = async () => {
+    setBusy(true)
+    try { await breakGoal(goal.id); nav('/xipebox') }
+    catch (e) { alert(e.message); setBusy(false) }
+  }
 
   if (!goal) return (
     <PhoneFrame>
@@ -56,8 +69,8 @@ export default function XipeDetail() {
         <TextInput type="number" value={extra} onChange={(e) => setExtra(e.target.value)}
           placeholder={String(goal.contribution)} />
       </Field>
-      <Button onClick={() => { contributeGoal(goal.id, Number(extra) || goal.contribution); setExtra('') }}>
-        Hacer aportación
+      <Button onClick={doContribute} className={busy ? 'opacity-40 pointer-events-none' : ''}>
+        {busy ? 'Procesando…' : 'Hacer aportación'}
       </Button>
 
       <button onClick={() => setConfirmBreak(true)}
@@ -80,9 +93,9 @@ export default function XipeDetail() {
               regresarán a tu balance. Esta acción no se puede deshacer.
             </p>
             <button
-              onClick={() => { breakGoal(goal.id); nav('/xipebox') }}
-              className="w-full rounded-2xl bg-red-500 text-white font-semibold py-3.5 mb-2">
-              Sí, romper y recuperar {money(goal.saved)}
+              onClick={doBreak}
+              className={`w-full rounded-2xl bg-red-500 text-white font-semibold py-3.5 mb-2 ${busy ? 'opacity-60 pointer-events-none' : ''}`}>
+              {busy ? 'Rompiendo…' : `Sí, romper y recuperar ${money(goal.saved)}`}
             </button>
             <button onClick={() => setConfirmBreak(false)} className="btn-ghost">
               Cancelar
