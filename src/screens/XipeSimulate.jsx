@@ -1,24 +1,45 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PhoneFrame } from '../components/PhoneFrame'
 import { ScreenHeader, Field, TextInput, ProgressBar } from '../components/ui'
 import { money } from '../data/MockProvider'
-import { PERIODS, computeContribution, periodMeta, periodsInMonths } from '../data/period'
+import { api } from '../data/api'
+import { PERIODS, periodMeta } from '../data/period'
 
 export default function XipeSimulate() {
   const [target, setTarget] = useState('10000')
   const [termMonths, setTermMonths] = useState('12')
   const [initialPayment, setInitialPayment] = useState('')
   const [period, setPeriod] = useState('mensual')
+  const [sim, setSim] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   const t = Number(target) || 0
   const m = Number(termMonths) || 0
-  const i = Number(initialPayment) || 0
-
-  const contribution = computeContribution({ target, termMonths, period, initialPayment })
-  const periods = periodsInMonths(period, m || 1)
   const adj = periodMeta(period).adjective
-  const totalSaved = i + contribution * periods
-  const reach = m > 0 && totalSaved >= t
+
+  // Recalcula en el backend (aplica la tasa/promoción configurable) con debounce.
+  useEffect(() => {
+    if (!(t > 0 && m > 0)) { setSim(null); return }
+    const id = setTimeout(async () => {
+      try {
+        setLoading(true)
+        const res = await api.post('/xipebox/simulate', {
+          target: t,
+          initialPayment: Number(initialPayment) || 0,
+          termMonths: m,
+          period: period.toUpperCase(),
+        })
+        setSim(res)
+      } catch { setSim(null) }
+      finally { setLoading(false) }
+    }, 400)
+    return () => clearTimeout(id)
+  }, [t, m, initialPayment, period])
+
+  const contribution = sim?.contribution ?? 0
+  const periods = sim?.periods ?? 0
+  const projected = sim?.projectedValue ?? 0
+  const reach = sim && projected >= t
 
   return (
     <PhoneFrame>
@@ -54,23 +75,24 @@ export default function XipeSimulate() {
           Tu abono {adj}
         </p>
         <p className="text-2xl font-extrabold text-accent">
-          {contribution > 0 ? money(contribution) : '—'}
+          {loading ? '…' : contribution > 0 ? money(contribution) : '—'}
         </p>
-        {contribution > 0 && (
+        {sim && (
           <p className="text-[11px] text-neutral-500 mt-1">
-            {periods} {periods === 1 ? 'abono' : 'abonos'} {adj === 'mensual' ? 'mensuales' : `${adj}es`}
+            {periods} {periods === 1 ? 'abono' : 'abonos'} · rendimiento {(sim.annualRate * 100).toFixed(2)}% anual
           </p>
         )}
       </div>
 
       <div className="rounded-3xl bg-ink-900 border border-ink-800 p-5">
         <p className="text-sm text-neutral-400 mb-2">Proyección</p>
-        <ProgressBar value={totalSaved} max={t || 1} />
+        <ProgressBar value={projected} max={t || 1} />
         <div className="grid grid-cols-2 gap-3 mt-5 text-sm">
-          <Stat label="Ahorras en el plazo" value={money(totalSaved)} />
+          <Stat label="Valor proyectado" value={money(projected)} />
           <Stat label="Meta" value={money(t)} />
           <Stat label={`Abono ${adj}`} value={contribution > 0 ? money(contribution) : '—'} />
-          <Stat label="Periodos" value={`${periods}`} />
+          <Stat label="Rendimiento" value={sim ? money(sim.projectedReturn) : '—'} highlight />
+          <Stat label="Cumples el" value={sim ? sim.completionDate : '—'} />
           <Stat label="Estatus"
             value={reach ? '✅ Alcanzas la meta' : '⚠️ Ajusta plazo/meta'}
             highlight={reach} />

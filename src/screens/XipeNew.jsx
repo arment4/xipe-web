@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PhoneFrame } from '../components/PhoneFrame'
 import { ScreenHeader, Field, TextInput, Button } from '../components/ui'
 import { useMock, money } from '../data/MockProvider'
-import { PERIODS, computeContribution, periodMeta, periodsInMonths } from '../data/period'
+import { api } from '../data/api'
+import { PERIODS, periodMeta } from '../data/period'
 
 const emojis = ['🎯', '🏝️', '🚗', '🏠', '💍', '🎓', '✈️', '💻']
 
@@ -16,11 +17,31 @@ export default function XipeNew() {
   })
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value })
 
-  const contribution = computeContribution(f)
-  const periods = f.termMonths ? periodsInMonths(f.period, Number(f.termMonths)) : 0
   const adj = periodMeta(f.period).adjective
+  const [sim, setSim] = useState(null)
 
-  const ok = f.title && Number(f.target) > 0 && Number(f.termMonths) > 0
+  // La aportación la calcula el backend (aplica tasa/promoción configurable).
+  useEffect(() => {
+    const t = Number(f.target) || 0, m = Number(f.termMonths) || 0
+    if (!(t > 0 && m > 0)) { setSim(null); return }
+    const id = setTimeout(async () => {
+      try {
+        const res = await api.post('/xipebox/simulate', {
+          target: t,
+          initialPayment: Number(f.initialPayment) || 0,
+          termMonths: m,
+          period: f.period.toUpperCase(),
+        })
+        setSim(res)
+      } catch { setSim(null) }
+    }, 400)
+    return () => clearTimeout(id)
+  }, [f.target, f.termMonths, f.initialPayment, f.period])
+
+  const contribution = sim?.contribution ?? 0
+  const periods = sim?.periods ?? 0
+
+  const ok = f.title && Number(f.target) > 0 && Number(f.termMonths) > 0 && contribution > 0
   const [err, setErr] = useState('')
   const [loading, setLoading] = useState(false)
   const submit = async () => {
@@ -85,9 +106,9 @@ export default function XipeNew() {
         <p className="text-2xl font-extrabold text-accent">
           {contribution > 0 ? money(contribution) : '—'}
         </p>
-        {contribution > 0 && (
+        {sim && (
           <p className="text-[11px] text-neutral-500 mt-1">
-            En {periods} {periods === 1 ? 'abono' : 'abonos'} {adj === 'mensual' ? 'mensuales' : `${adj}es`} alcanzas tu meta.
+            En {periods} {periods === 1 ? 'abono' : 'abonos'} · rendimiento {(sim.annualRate * 100).toFixed(2)}% anual.
           </p>
         )}
       </div>
