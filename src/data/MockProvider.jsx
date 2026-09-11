@@ -124,6 +124,11 @@ export function MockProvider({ children }) {
     applyUser(u)
   }
 
+  const getDocuments = async () => {
+    const { documents } = await api.get('/me/documents')
+    return documents || []
+  }
+
   const changePassword = async (current, nextPw) => {
     await api.post('/me/password', { current, next: nextPw })
   }
@@ -179,7 +184,7 @@ export function MockProvider({ children }) {
 
   const value = useMemo(() => ({
     ready, authed, user, balance, goals, transactions, notifications,
-    login, logout, register, updateProfile, verifyIdentity, changePassword,
+    login, logout, register, updateProfile, verifyIdentity, getDocuments, changePassword,
     addMoney, sendMoney, requestWithdrawal,
     createGoal, contributeGoal, breakGoal,
   }), [ready, authed, user, balance, goals, transactions, notifications])
