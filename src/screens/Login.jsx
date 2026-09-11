@@ -18,8 +18,8 @@ export default function Login() {
     setErr('')
     try {
       setLoading(true)
-      const u = await login(email, password)
-      nav(u?.role === 'ADMIN' ? '/admin' : '/home')
+      await login(email, password)
+      nav('/home')
     } catch (e) { setErr(e.message) }
     finally { setLoading(false) }
   }

@@ -41,9 +41,6 @@ export default function Profile() {
         className="btn-ghost mt-6 text-red-500 border-red-500/30">
         Cerrar sesión
       </button>
-      <p className="text-center text-xs text-neutral-600 mt-4">
-        Panel admin: <button onClick={() => nav('/admin')} className="text-accent">/admin</button>
-      </p>
     </MobileLayout>
   )
 }

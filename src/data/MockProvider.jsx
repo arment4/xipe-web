@@ -54,17 +54,6 @@ const mapNotif = (n) => ({
   goal: n.goalTitle || '', tone: n.tone,
 })
 
-const mapWithdrawal = (w) => ({
-  id: w.id, client: w.client, amount: Number(w.amount),
-  account: w.account, date: w.date,
-  status: lc(w.status),
-})
-
-const mapSupport = (s) => ({
-  id: s.id, client: s.client, subject: s.subject, body: s.body,
-  date: s.date, status: lc(s.status),
-})
-
 const today = () => new Date().toISOString().slice(0, 10)
 
 export function MockProvider({ children }) {
@@ -73,9 +62,6 @@ export function MockProvider({ children }) {
   const [goals, setGoals] = useState([])
   const [transactions, setTransactions] = useState([])
   const [notifications, setNotifications] = useState([])
-  const [clients, setClients] = useState([])
-  const [withdrawals, setWithdrawals] = useState([])
-  const [support, setSupport] = useState([])
   const [authed, setAuthed] = useState(false)
   const [ready, setReady] = useState(false)
 
@@ -92,19 +78,6 @@ export function MockProvider({ children }) {
     setNotifications((n.notifications || []).map(mapNotif))
   }, [])
 
-  const loadAdmin = useCallback(async () => {
-    try {
-      const [c, w, s] = await Promise.all([
-        api.get('/admin/clients'),
-        api.get('/admin/withdrawals'),
-        api.get('/admin/support'),
-      ])
-      setClients(c.clients || [])
-      setWithdrawals((w.withdrawals || []).map(mapWithdrawal))
-      setSupport((s.support || []).map(mapSupport))
-    } catch { /* not admin or offline */ }
-  }, [])
-
   // Bootstrap session on mount (only if we already hold a token).
   useEffect(() => {
     (async () => {
@@ -113,11 +86,10 @@ export function MockProvider({ children }) {
         const { user: u } = await api.get('/auth/me')
         applyUser(u)
         await loadCore()
-        if (u.role === 'ADMIN') await loadAdmin()
       } catch { setToken(null) /* stale/invalid token */ }
       finally { setReady(true) }
     })()
-  }, [loadCore, loadAdmin])
+  }, [loadCore])
 
   // ---- actions ----
   const login = async (email, password) => {
@@ -125,7 +97,6 @@ export function MockProvider({ children }) {
     setToken(token)
     applyUser(u)
     await loadCore()
-    if (u.role === 'ADMIN') await loadAdmin()
     return mapUser(u)
   }
 
@@ -134,7 +105,6 @@ export function MockProvider({ children }) {
     setToken(null)
     setUser(null); setAuthed(false)
     setGoals([]); setTransactions([]); setNotifications([])
-    setClients([]); setWithdrawals([]); setSupport([])
   }
 
   const register = async ({ email, password, name, phone, address }) => {
@@ -207,25 +177,12 @@ export function MockProvider({ children }) {
     await loadCore()
   }
 
-  const setWithdrawalStatus = async (id, status) => {
-    await api.patch(`/admin/withdrawals/${id}`, { status: status.toUpperCase() })
-    await loadAdmin()
-  }
-
-  const setSupportStatus = async (id, status) => {
-    await api.patch(`/admin/support/${id}`, { status: status.toUpperCase() })
-    await loadAdmin()
-  }
-
   const value = useMemo(() => ({
     ready, authed, user, balance, goals, transactions, notifications,
-    clients, withdrawals, support,
     login, logout, register, updateProfile, verifyIdentity, changePassword,
     addMoney, sendMoney, requestWithdrawal,
     createGoal, contributeGoal, breakGoal,
-    setWithdrawalStatus, setSupportStatus,
-  }), [ready, authed, user, balance, goals, transactions, notifications,
-    clients, withdrawals, support])
+  }), [ready, authed, user, balance, goals, transactions, notifications])
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>
 }

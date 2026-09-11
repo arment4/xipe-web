@@ -24,11 +24,6 @@ import ProfileVerification from './screens/ProfileVerification'
 import ChangePassword from './screens/ChangePassword'
 import Pin from './screens/Pin'
 
-import AdminClients from './admin/AdminClients'
-import AdminClientDetail from './admin/AdminClientDetail'
-import AdminWithdrawals from './admin/AdminWithdrawals'
-import AdminSupport from './admin/AdminSupport'
-
 function RequireAuth({ children }) {
   const { ready, authed } = useMock()
   const loc = useLocation()
@@ -72,10 +67,6 @@ export default function App() {
           ['/profile/verification', <ProfileVerification />],
           ['/profile/password', <ChangePassword />],
           ['/profile/pin', <Pin />],
-          ['/admin', <AdminClients />],
-          ['/admin/clients/:id', <AdminClientDetail />],
-          ['/admin/withdrawals', <AdminWithdrawals />],
-          ['/admin/support', <AdminSupport />],
         ].map(([p, el]) => (
           <Route key={p} path={p} element={<RequireAuth>{el}</RequireAuth>} />
         ))}
