@@ -62,16 +62,27 @@ export default function ProfileVerification() {
   // El formulario solo aparece cuando no hay nada enviado o fue rechazado.
   const canUpload = state === 'none' || state === 'rejected'
 
+  // Estado por tipo (hay un solo documento activo por tipo). Un documento
+  // aprobado ya no se puede volver a subir; solo se re-suben los pendientes de
+  // corregir (rechazados) o los que aún no se han enviado.
+  const statusByType = Object.fromEntries(docs.map((d) => [d.type, d.status]))
+  const ineApproved = statusByType.INE === 'APROBADO'
+  const domApproved = statusByType.DOMICILIO === 'APROBADO'
+
   const send = async () => {
     setError('')
-    if (!idDoc) {
+    if (!ineApproved && !idDoc) {
       setError('Anexa tu identificación oficial para continuar.')
+      return
+    }
+    if (!idDoc && !addressDoc) {
+      setError('Selecciona al menos un documento para enviar.')
       return
     }
     try {
       setLoading(true)
       const form = new FormData()
-      form.append('identityDoc', idDoc)
+      if (idDoc) form.append('identityDoc', idDoc)
       if (addressDoc) form.append('addressDoc', addressDoc)
       await verifyIdentity(form)
       setIdDoc(null)
@@ -137,15 +148,19 @@ export default function ProfileVerification() {
             </div>
           )}
 
-          {/* Formulario de subida (solo si aplica) */}
+          {/* Formulario de subida: solo los documentos que aún no están aprobados */}
           {canUpload && (
             <>
-              <Field label="Identificación oficial (INE o pasaporte)">
-                <FileInput label="Anexar identificación" file={idDoc} onChange={setIdDoc} />
-              </Field>
-              <Field label="Comprobante de domicilio (opcional)">
-                <FileInput label="Anexar comprobante" file={addressDoc} onChange={setAddressDoc} />
-              </Field>
+              {!ineApproved && (
+                <Field label="Identificación oficial (INE o pasaporte)">
+                  <FileInput label="Anexar identificación" file={idDoc} onChange={setIdDoc} />
+                </Field>
+              )}
+              {!domApproved && (
+                <Field label="Comprobante de domicilio (opcional)">
+                  <FileInput label="Anexar comprobante" file={addressDoc} onChange={setAddressDoc} />
+                </Field>
+              )}
 
               {error && <p className="text-sm text-red-500 mb-3">{error}</p>}
 
