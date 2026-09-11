@@ -5,11 +5,16 @@ import { ScreenHeader, Field, FileInput, Button, Toast } from '../components/ui'
 import { useMock } from '../data/MockProvider'
 
 // Overall verification state derived from the uploaded documents.
+// Priority: a rejected document must win over an approved one so the client can
+// always re-submit what was rejected (e.g. INE approved but proof of address
+// rejected still needs a re-upload). Pending wins first: a fresh submission is
+// under review and there is nothing to re-do yet.
 function deriveState(docs) {
   if (!docs.length) return 'none'
   if (docs.some((d) => d.status === 'PENDIENTE')) return 'pending'
+  if (docs.some((d) => d.status === 'RECHAZADO')) return 'rejected'
   if (docs.some((d) => d.status === 'APROBADO')) return 'approved'
-  return 'rejected'
+  return 'none'
 }
 
 const DOC_BADGE = {
