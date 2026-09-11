@@ -56,12 +56,19 @@ export function TextInput(props) {
   return <input {...props} className={`app-input ${props.className || ''}`} />
 }
 
-export function FileInput({ label }) {
+export function FileInput({ label, file, onChange, accept = 'image/jpeg,image/png,application/pdf' }) {
   return (
     <label className="block w-full rounded-2xl border border-dashed border-ink-600 bg-ink-850 px-4 py-5 text-center text-sm text-neutral-400 cursor-pointer hover:border-brand/50 transition">
-      <span className="text-accent font-medium">📎 {label}</span>
-      <span className="block text-[11px] mt-1">JPG, PNG o PDF (prototipo — no se sube)</span>
-      <input type="file" className="hidden" />
+      <span className="text-accent font-medium">📎 {file ? file.name : label}</span>
+      <span className="block text-[11px] mt-1">
+        {file ? `${Math.max(1, Math.round(file.size / 1024))} KB — toca para cambiar` : 'JPG, PNG o PDF · máx 8 MB'}
+      </span>
+      <input
+        type="file"
+        accept={accept}
+        className="hidden"
+        onChange={(e) => onChange?.(e.target.files?.[0] || null)}
+      />
     </label>
   )
 }

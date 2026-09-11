@@ -9,14 +9,16 @@ export const setToken = (t) => {
 
 async function request(method, path, body) {
   const token = getToken()
+  const isForm = typeof FormData !== 'undefined' && body instanceof FormData
   const headers = { Accept: 'application/json' }
-  if (body) headers['Content-Type'] = 'application/json'
+  // Let the browser set the multipart boundary for FormData uploads.
+  if (body && !isForm) headers['Content-Type'] = 'application/json'
   if (token) headers.Authorization = `Bearer ${token}`
 
   const res = await fetch(`${BASE}/api${path}`, {
     method,
     headers,
-    body: body ? JSON.stringify(body) : undefined,
+    body: body ? (isForm ? body : JSON.stringify(body)) : undefined,
   })
   const ct = res.headers.get('content-type') || ''
   const data = ct.includes('application/json') ? await res.json() : null

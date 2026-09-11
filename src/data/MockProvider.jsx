@@ -149,8 +149,8 @@ export function MockProvider({ children }) {
     applyUser(u)
   }
 
-  const verifyIdentity = async () => {
-    const { user: u } = await api.post('/me/verify-identity')
+  const verifyIdentity = async (form) => {
+    const { user: u } = await api.post('/me/verify-identity', form)
     applyUser(u)
   }
 
